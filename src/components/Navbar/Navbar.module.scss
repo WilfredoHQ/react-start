@@ -1,0 +1,36 @@
+.navbar {
+  position: sticky;
+  top: 0;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menuIcon {
+  @media (min-width: 640px) {
+    display: none;
+  }
+}
+
+.navigationButtons {
+  display: none;
+  gap: 10px;
+
+  @media (min-width: 640px) {
+    display: flex;
+  }
+}
+
+.navigationList {
+  width: 250px;
+}
+
+.navigationItem {
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

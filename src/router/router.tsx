@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom"
+import Layout from "src/components/Layout"
 import Home from "src/pages/Home"
 import Login from "src/pages/Login"
 import NotFound from "src/pages/NotFound"
@@ -34,8 +35,25 @@ export const router = createBrowserRouter([
     element: <PrivateRoute />,
     children: [
       {
-        path: "/",
-        element: <Home />,
+        element: <Layout />,
+        children: [
+          {
+            path: "/",
+            element: <Home />,
+          },
+          {
+            path: "/configuracion",
+            element: <div>Configuración</div>,
+          },
+          {
+            path: "/usuarios",
+            element: <div>Usuarios</div>,
+          },
+          {
+            path: "/usuarios/:userId",
+            element: <div>Perfil</div>,
+          },
+        ],
       },
     ],
   },
