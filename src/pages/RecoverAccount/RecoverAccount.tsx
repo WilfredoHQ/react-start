@@ -41,7 +41,7 @@ const RecoverAccount = () => {
   })
 
   return (
-    <div className={s.recover}>
+    <div className={s.recoverAccount}>
       <main className={s.main}>
         <h2 className={s.title}>Recupera tu cuenta</h2>
         <form onSubmit={onSubmit} autoComplete="off" noValidate className={s.form}>

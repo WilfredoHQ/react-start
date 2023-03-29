@@ -11,7 +11,7 @@ interface FormData {
   confirmPassword: string
 }
 
-const Reset = () => {
+const ResetPassword = () => {
   const resetPasswordMutation = useResetPasswordMutation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -51,7 +51,7 @@ const Reset = () => {
   })
 
   return (
-    <div className={s.reset}>
+    <div className={s.resetPassword}>
       <main className={s.main}>
         <h2 className={s.title}>Restablece tu contraseña</h2>
         <form onSubmit={onSubmit} autoComplete="off" noValidate className={s.form}>
@@ -106,4 +106,4 @@ const Reset = () => {
   )
 }
 
-export default Reset
+export default ResetPassword
