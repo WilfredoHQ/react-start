@@ -86,20 +86,17 @@ const Reset = () => {
               },
             })}
           />
-          <div className={s.submit}>
-            <Button
-              type="submit"
-              disabled={resetPasswordMutation.status === "loading"}
-              variant="contained"
-            >
-              Restablecer contraseña
-            </Button>
+          <Button
+            type="submit"
+            disabled={resetPasswordMutation.status === "loading"}
+            variant="contained"
+            className={s.submit}
+          >
+            Restablecer contraseña
             {resetPasswordMutation.status === "loading" && (
-              <div className={s.loading}>
-                <CircularProgress size={16} />
-              </div>
+              <CircularProgress size={16} color="inherit" />
             )}
-          </div>
+          </Button>
         </form>
         <p className={s.option}>
           ¿Tienes inconvenientes? <Link to="/recuperar">Enviar nuevo correo</Link>

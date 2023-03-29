@@ -3,6 +3,8 @@
 
 html {
   font-family: "Roboto", sans-serif;
+  color: #1a2027;
+  background-color: #ffffff;
 }
 
 a {
@@ -12,3 +14,20 @@ a {
     text-decoration: underline;
   }
 }
+
+/* Mobile first */
+/* Before responsive design opt for fluid design */
+
+/* base - Mobile devices */
+
+/* sm - iPads, Tablets */
+/* @media (min-width: 640px) { ... } */
+
+/* md - Small screens, laptops */
+/* @media (min-width: 768px) { ... } */
+
+/* lg - Desktops, large screens */
+/* @media (min-width: 1024px) { ... } */
+
+/* xl - Extra large screens, TV */
+/* @media (min-width: 1280px) { ... } */

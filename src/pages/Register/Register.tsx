@@ -104,20 +104,17 @@ const Register = () => {
               },
             })}
           />
-          <div className={s.submit}>
-            <Button
-              type="submit"
-              disabled={createUserMutation.status === "loading"}
-              variant="contained"
-            >
-              Crear cuenta
-            </Button>
+          <Button
+            type="submit"
+            disabled={createUserMutation.status === "loading"}
+            variant="contained"
+            className={s.submit}
+          >
+            Crear cuenta
             {createUserMutation.status === "loading" && (
-              <div className={s.loading}>
-                <CircularProgress size={16} />
-              </div>
+              <CircularProgress size={16} color="inherit" />
             )}
-          </div>
+          </Button>
         </form>
         <p className={s.option}>
           ¿Ya tienes cuenta? <Link to="/">Inicia sesión</Link>

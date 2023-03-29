@@ -70,20 +70,17 @@ const Login = () => {
               required: { value: true, message: "Este campo es obligatorio" },
             })}
           />
-          <div className={s.submit}>
-            <Button
-              type="submit"
-              disabled={loginMutation.status === "loading"}
-              variant="contained"
-            >
-              Iniciar sesión
-            </Button>
+          <Button
+            type="submit"
+            disabled={loginMutation.status === "loading"}
+            variant="contained"
+            className={s.submit}
+          >
+            Iniciar sesión
             {loginMutation.status === "loading" && (
-              <div className={s.loading}>
-                <CircularProgress size={16} />
-              </div>
+              <CircularProgress size={16} color="inherit" />
             )}
-          </div>
+          </Button>
         </form>
         <p className={s.option}>
           ¿No tienes una cuenta? <Link to="/registro">Regístrate gratis</Link>

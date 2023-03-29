@@ -61,20 +61,17 @@ const RecoverAccount = () => {
               },
             })}
           />
-          <div className={s.submit}>
-            <Button
-              type="submit"
-              disabled={recoverMutation.status === "loading"}
-              variant="contained"
-            >
-              Recuperar cuenta
-            </Button>
+          <Button
+            type="submit"
+            disabled={recoverMutation.status === "loading"}
+            variant="contained"
+            className={s.submit}
+          >
+            Recuperar cuenta
             {recoverMutation.status === "loading" && (
-              <div className={s.loading}>
-                <CircularProgress size={16} />
-              </div>
+              <CircularProgress size={16} color="inherit" />
             )}
-          </div>
+          </Button>
         </form>
         <p className={s.option}>
           ¿No tienes una cuenta? <Link to="/registro">Regístrate gratis</Link>
