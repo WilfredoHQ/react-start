@@ -16,7 +16,7 @@ export interface Error {
 export interface Follow {
   createdAt?: string
   followedId: string
-  followerId?: string
+  followerId: string
   id?: string
   updatedAt?: string
 }
@@ -34,7 +34,7 @@ export interface Post {
   createdAt?: string
   id?: string
   updatedAt?: string
-  userId?: string
+  userId: string
 }
 
 export interface PostCreate {
@@ -51,7 +51,7 @@ export interface Recover {
 
 export interface ResetPassword {
   /** @minLength 8 */
-  newPassword?: string
+  newPassword: string
   token: string
 }
 
@@ -88,7 +88,7 @@ export interface UserUpdate {
 }
 
 export interface ValidationError {
-  detail?: Record<string, any>
+  detail?: any
 }
 
 export interface V1AccountLoginCreatePayload {
