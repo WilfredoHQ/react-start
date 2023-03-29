@@ -7,7 +7,7 @@ const NotFound = () => {
     <div className={s.notFound}>
       <main className={s.main}>
         <h2>NotFound</h2>
-        <Button component={Link} variant="contained" to="/home">
+        <Button component={Link} variant="contained" to="/">
           Regresar al inicio
         </Button>
       </main>

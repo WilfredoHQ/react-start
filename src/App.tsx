@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Provider as ReduxProvider } from "react-redux"
+import { RouterProvider } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { AppRouter } from "./routers/AppRouter"
+import { router } from "./router"
 import { store } from "./store"
 
 const queryClient = new QueryClient({
@@ -20,7 +21,7 @@ const App = () => {
     <div>
       <ReduxProvider store={store}>
         <QueryClientProvider client={queryClient}>
-          <AppRouter />
+          <RouterProvider router={router} />
           <ToastContainer position="bottom-left" closeOnClick={false} />
           <ReactQueryDevtools />
         </QueryClientProvider>
