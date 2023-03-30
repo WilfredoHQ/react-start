@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
-import { useCreateUserMutation } from "src/hooks/useUsers"
+import { useCreateUser } from "src/hooks/useUsers"
 import s from "./Register.module.scss"
 
 interface FormData {
@@ -14,7 +14,7 @@ interface FormData {
 }
 
 const Register = () => {
-  const createUserMutation = useCreateUserMutation()
+  const createUser = useCreateUser()
 
   const {
     register,
@@ -26,7 +26,7 @@ const Register = () => {
   const onSubmit = handleSubmit(data => {
     const { confirmPassword, ...rest } = data
 
-    createUserMutation.mutate(rest, {
+    createUser.mutate(rest, {
       onError: error => {
         let content = "Ha ocurrido un error"
 
@@ -106,12 +106,12 @@ const Register = () => {
           />
           <Button
             type="submit"
-            disabled={createUserMutation.status === "loading"}
+            disabled={createUser.status === "loading"}
             variant="contained"
             className={s.submit}
           >
             Crear cuenta
-            {createUserMutation.status === "loading" && (
+            {createUser.status === "loading" && (
               <CircularProgress size={16} color="inherit" />
             )}
           </Button>

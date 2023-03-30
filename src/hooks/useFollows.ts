@@ -7,7 +7,7 @@ import {
 import { type User, type Follow, type V1FollowsListParams } from "src/models"
 import { createFollow, deleteFollow, readFollow, readFollows } from "src/services"
 
-export const useReadFollowsInfiniteQuery = ({
+export const useReadFollows = ({
   skip = 0,
   limit = 20,
   ...rest
@@ -26,7 +26,7 @@ export const useReadFollowsInfiniteQuery = ({
   })
 }
 
-export const useCreateFollowMutation = () => {
+export const useCreateFollow = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -48,14 +48,14 @@ export const useCreateFollowMutation = () => {
   })
 }
 
-export const useReadFollowQuery = (followId: string) => {
+export const useReadFollow = (followId: string) => {
   return useQuery({
     queryKey: ["follows", followId],
     queryFn: async () => await readFollow(followId),
   })
 }
 
-export const useDeleteFollowMutation = () => {
+export const useDeleteFollow = () => {
   const queryClient = useQueryClient()
 
   return useMutation({

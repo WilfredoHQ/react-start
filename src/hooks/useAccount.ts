@@ -2,11 +2,11 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { current, login, recover, resetPassword } from "src/services"
 import { useAuth } from "./useAuth"
 
-export const useCurrentQuery = () => {
+export const useCurrent = () => {
   return useQuery({ queryKey: ["account", "current"], queryFn: current })
 }
 
-export const useLoginMutation = () => {
+export const useLogin = () => {
   const { handleLogin } = useAuth()
 
   return useMutation({
@@ -17,10 +17,10 @@ export const useLoginMutation = () => {
   })
 }
 
-export const useRecoverMutation = () => {
+export const useRecover = () => {
   return useMutation({ mutationFn: recover })
 }
 
-export const useResetPasswordMutation = () => {
+export const useResetPassword = () => {
   return useMutation({ mutationFn: resetPassword })
 }

@@ -6,13 +6,9 @@ import {
 } from "@tanstack/react-query"
 import { type User, type V1UsersListParams } from "src/models"
 import { createUser, readUser, readUsers, updateUser } from "src/services"
-import { useLoginMutation } from "./useAccount"
+import { useLogin } from "./useAccount"
 
-export const useReadUsersInfiniteQuery = ({
-  skip = 0,
-  limit = 20,
-  ...rest
-}: V1UsersListParams) => {
+export const useReadUsers = ({ skip = 0, limit = 20, ...rest }: V1UsersListParams) => {
   return useInfiniteQuery({
     queryKey: ["users", rest],
     queryFn: async ({ pageParam = skip }) =>
@@ -27,13 +23,13 @@ export const useReadUsersInfiniteQuery = ({
   })
 }
 
-export const useCreateUserMutation = () => {
-  const loginMutation = useLoginMutation()
+export const useCreateUser = () => {
+  const login = useLogin()
 
   return useMutation({
     mutationFn: createUser,
     onSuccess: (_, userCreate) => {
-      loginMutation.mutate({
+      login.mutate({
         username: userCreate.email,
         password: userCreate.password,
       })
@@ -41,14 +37,14 @@ export const useCreateUserMutation = () => {
   })
 }
 
-export const useReadUserQuery = (userId: string) => {
+export const useReadUser = (userId: string) => {
   return useQuery({
     queryKey: ["users", userId],
     queryFn: async () => await readUser(userId),
   })
 }
 
-export const useUpdateUserMutation = () => {
+export const useUpdateUser = () => {
   const queryClient = useQueryClient()
 
   return useMutation({

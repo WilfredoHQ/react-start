@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
-import { useLoginMutation } from "src/hooks/useAccount"
+import { useLogin } from "src/hooks/useAccount"
 import s from "./Login.module.scss"
 
 interface FormData {
@@ -12,7 +12,7 @@ interface FormData {
 }
 
 const Login = () => {
-  const loginMutation = useLoginMutation()
+  const login = useLogin()
 
   const {
     register,
@@ -21,7 +21,7 @@ const Login = () => {
   } = useForm<FormData>()
 
   const onSubmit = handleSubmit(data => {
-    loginMutation.mutate(data, {
+    login.mutate(data, {
       onError: error => {
         let content = "Ha ocurrido un error"
 
@@ -72,12 +72,12 @@ const Login = () => {
           />
           <Button
             type="submit"
-            disabled={loginMutation.status === "loading"}
+            disabled={login.status === "loading"}
             variant="contained"
             className={s.submit}
           >
             Iniciar sesión
-            {loginMutation.status === "loading" && (
+            {login.status === "loading" && (
               <CircularProgress size={16} color="inherit" />
             )}
           </Button>

@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "react-toastify"
-import { useResetPasswordMutation } from "src/hooks/useAccount"
+import { useResetPassword } from "src/hooks/useAccount"
 import s from "./ResetPassword.module.scss"
 
 interface FormData {
@@ -12,7 +12,7 @@ interface FormData {
 }
 
 const ResetPassword = () => {
-  const resetPasswordMutation = useResetPasswordMutation()
+  const resetPassword = useResetPassword()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
@@ -27,7 +27,7 @@ const ResetPassword = () => {
     const token = searchParams.get("token")
 
     token !== null &&
-      resetPasswordMutation.mutate(
+      resetPassword.mutate(
         { token, newPassword: password },
         {
           onSuccess: () => {
@@ -88,12 +88,12 @@ const ResetPassword = () => {
           />
           <Button
             type="submit"
-            disabled={resetPasswordMutation.status === "loading"}
+            disabled={resetPassword.status === "loading"}
             variant="contained"
             className={s.submit}
           >
             Restablecer contraseña
-            {resetPasswordMutation.status === "loading" && (
+            {resetPassword.status === "loading" && (
               <CircularProgress size={16} color="inherit" />
             )}
           </Button>

@@ -19,11 +19,7 @@ import {
   updatePost,
 } from "src/services"
 
-export const useReadPostsInfiniteQuery = ({
-  skip = 0,
-  limit = 20,
-  ...rest
-}: V1PostsListParams) => {
+export const useReadPosts = ({ skip = 0, limit = 20, ...rest }: V1PostsListParams) => {
   return useInfiniteQuery({
     queryKey: ["posts", rest],
     queryFn: async ({ pageParam = skip }) =>
@@ -38,7 +34,7 @@ export const useReadPostsInfiniteQuery = ({
   })
 }
 
-export const useCreatePostMutation = () => {
+export const useCreatePost = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -57,7 +53,7 @@ export const useCreatePostMutation = () => {
   })
 }
 
-export const useReadHomePostsInfiniteQuery = ({
+export const useReadHomePosts = ({
   skip = 0,
   limit = 20,
   ...rest
@@ -76,14 +72,14 @@ export const useReadHomePostsInfiniteQuery = ({
   })
 }
 
-export const useReadPostQuery = (postId: string) => {
+export const useReadPost = (postId: string) => {
   return useQuery({
     queryKey: ["posts", postId],
     queryFn: async () => await readPost(postId),
   })
 }
 
-export const useDeletePostMutation = () => {
+export const useDeletePost = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -102,7 +98,7 @@ export const useDeletePostMutation = () => {
   })
 }
 
-export const useUpdatePostMutation = () => {
+export const useUpdatePost = () => {
   const queryClient = useQueryClient()
 
   return useMutation({

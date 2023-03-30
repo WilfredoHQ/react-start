@@ -23,14 +23,14 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useCurrentQuery } from "src/hooks/useAccount"
+import { useCurrent } from "src/hooks/useAccount"
 import { useAuth } from "src/hooks/useAuth"
 import s from "./Navbar.module.scss"
 
 const Navbar = () => {
   const [open, setOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-  const currentQuery = useCurrentQuery()
+  const current = useCurrent()
   const { handleLogout } = useAuth()
 
   return (
@@ -76,7 +76,7 @@ const Navbar = () => {
           >
             <MenuItem
               component={Link}
-              to={`/usuarios/${currentQuery.data?.id ?? ""}`}
+              to={`/usuarios/${current.data?.id ?? ""}`}
               onClick={() => {
                 setAnchorEl(null)
               }}

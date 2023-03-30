@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
-import { useRecoverMutation } from "src/hooks/useAccount"
+import { useRecover } from "src/hooks/useAccount"
 import s from "./RecoverAccount.module.scss"
 
 interface FormData {
@@ -11,7 +11,7 @@ interface FormData {
 }
 
 const RecoverAccount = () => {
-  const recoverMutation = useRecoverMutation()
+  const recover = useRecover()
 
   const {
     register,
@@ -20,7 +20,7 @@ const RecoverAccount = () => {
   } = useForm<FormData>()
 
   const onSubmit = handleSubmit(data => {
-    recoverMutation.mutate(data, {
+    recover.mutate(data, {
       onSuccess: () => {
         toast.success("Correo electrónico de recuperación de cuenta enviado")
       },
@@ -63,12 +63,12 @@ const RecoverAccount = () => {
           />
           <Button
             type="submit"
-            disabled={recoverMutation.status === "loading"}
+            disabled={recover.status === "loading"}
             variant="contained"
             className={s.submit}
           >
             Recuperar cuenta
-            {recoverMutation.status === "loading" && (
+            {recover.status === "loading" && (
               <CircularProgress size={16} color="inherit" />
             )}
           </Button>
