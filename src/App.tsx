@@ -1,3 +1,5 @@
+import { LocalizationProvider } from "@mui/x-date-pickers"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { Provider as ReduxProvider } from "react-redux"
@@ -18,15 +20,15 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    <div>
-      <ReduxProvider store={store}>
-        <QueryClientProvider client={queryClient}>
+    <ReduxProvider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <RouterProvider router={router} />
-          <ToastContainer position="bottom-left" closeOnClick={false} />
-          <ReactQueryDevtools />
-        </QueryClientProvider>
-      </ReduxProvider>
-    </div>
+        </LocalizationProvider>
+        <ToastContainer position="bottom-left" closeOnClick={false} />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ReduxProvider>
   )
 }
 
