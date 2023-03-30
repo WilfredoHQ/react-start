@@ -61,28 +61,46 @@ export interface Token {
 }
 
 export interface User {
+  avatarUrl?: string
+  biography?: string
+  birthdate?: string
+  coverUrl?: string
   createdAt?: string
   email: string
   fullName?: string
+  gender?: string
   id?: string
   isActive?: boolean
   isSuperuser?: boolean
+  location?: string
   updatedAt?: string
 }
 
 export interface UserCreate {
+  avatarUrl?: string
+  biography?: string
+  birthdate?: string
+  coverUrl?: string
   email: string
   fullName?: string
+  gender?: string
   isActive?: boolean
   isSuperuser?: boolean
+  location?: string
   /** @minLength 8 */
   password: string
 }
 
 export interface UserUpdate {
+  avatarUrl?: string
+  biography?: string
+  birthdate?: string
+  coverUrl?: string
   fullName?: string
+  gender?: string
   isActive?: boolean
   isSuperuser?: boolean
+  location?: string
   /** @minLength 8 */
   password?: string
 }
