@@ -34,7 +34,7 @@ const Navbar = () => {
   const { handleLogout } = useAuth()
 
   return (
-    <div className={s.navbar}>
+    <>
       <AppBar position="sticky">
         <Toolbar className={s.toolbar}>
           <div className={s.menuIcon}>
@@ -153,7 +153,7 @@ const Navbar = () => {
           </ListItem>
         </List>
       </SwipeableDrawer>
-    </div>
+    </>
   )
 }
 
