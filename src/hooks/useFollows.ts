@@ -12,7 +12,7 @@ export const useReadFollows = ({
   limit = 20,
   ...rest
 }: V1FollowsListParams) => {
-  return useInfiniteQuery({
+  const result = useInfiniteQuery({
     queryKey: ["follows", rest],
     queryFn: async ({ pageParam = skip }) =>
       await readFollows({ ...rest, skip: pageParam, limit }),
@@ -24,6 +24,10 @@ export const useReadFollows = ({
       return follows.length
     },
   })
+
+  const allData = ([] as Follow[]).concat(...(result.data?.pages ?? []))
+
+  return { ...result, allData }
 }
 
 export const useCreateFollow = () => {
@@ -33,13 +37,6 @@ export const useCreateFollow = () => {
     mutationFn: createFollow,
     onSuccess: async follow => {
       const user = queryClient.getQueryData<User>(["account", "current"])
-
-      queryClient.setQueryData<Follow[]>(
-        ["follows", { followerId: user?.id }],
-        oldFollows => {
-          return [follow, ...(oldFollows ?? [])]
-        }
-      )
 
       await queryClient.invalidateQueries({
         queryKey: ["follows", { followerId: user?.id }],
@@ -62,13 +59,6 @@ export const useDeleteFollow = () => {
     mutationFn: deleteFollow,
     onSuccess: async (_, followId) => {
       const user = queryClient.getQueryData<User>(["account", "current"])
-
-      queryClient.setQueryData<Follow[]>(
-        ["follows", { followerId: user?.id }],
-        oldFollows => {
-          return oldFollows?.filter(f => f.id !== followId)
-        }
-      )
 
       await queryClient.invalidateQueries({
         queryKey: ["follows", { followerId: user?.id }],

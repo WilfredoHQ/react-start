@@ -9,7 +9,7 @@ import { createUser, readUser, readUsers, updateUser } from "src/services"
 import { useLogin } from "./useAccount"
 
 export const useReadUsers = ({ skip = 0, limit = 20, ...rest }: V1UsersListParams) => {
-  return useInfiniteQuery({
+  const result = useInfiniteQuery({
     queryKey: ["users", rest],
     queryFn: async ({ pageParam = skip }) =>
       await readUsers({ ...rest, skip: pageParam, limit }),
@@ -21,6 +21,10 @@ export const useReadUsers = ({ skip = 0, limit = 20, ...rest }: V1UsersListParam
       return users.length
     },
   })
+
+  const allData = ([] as User[]).concat(...(result.data?.pages ?? []))
+
+  return { ...result, allData }
 }
 
 export const useCreateUser = () => {

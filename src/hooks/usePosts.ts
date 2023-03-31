@@ -20,7 +20,7 @@ import {
 } from "src/services"
 
 export const useReadPosts = ({ skip = 0, limit = 20, ...rest }: V1PostsListParams) => {
-  return useInfiniteQuery({
+  const result = useInfiniteQuery({
     queryKey: ["posts", rest],
     queryFn: async ({ pageParam = skip }) =>
       await readPosts({ ...rest, skip: pageParam, limit }),
@@ -32,6 +32,10 @@ export const useReadPosts = ({ skip = 0, limit = 20, ...rest }: V1PostsListParam
       return posts.length
     },
   })
+
+  const allData = ([] as Post[]).concat(...(result.data?.pages ?? []))
+
+  return { ...result, allData }
 }
 
 export const useCreatePost = () => {
@@ -41,10 +45,6 @@ export const useCreatePost = () => {
     mutationFn: createPost,
     onSuccess: async post => {
       const user = queryClient.getQueryData<User>(["account", "current"])
-
-      queryClient.setQueryData<Post[]>(["posts", { userId: user?.id }], oldPosts => {
-        return [post, ...(oldPosts ?? [])]
-      })
 
       await queryClient.invalidateQueries({
         queryKey: ["posts", { userId: user?.id }],
@@ -58,7 +58,7 @@ export const useReadHomePosts = ({
   limit = 20,
   ...rest
 }: V1PostsHomeListParams) => {
-  return useInfiniteQuery({
+  const result = useInfiniteQuery({
     queryKey: ["posts", "home", rest],
     queryFn: async ({ pageParam = skip }) =>
       await readHomePosts({ ...rest, skip: pageParam, limit }),
@@ -70,6 +70,10 @@ export const useReadHomePosts = ({
       return posts.length
     },
   })
+
+  const allData = ([] as Post[]).concat(...(result.data?.pages ?? []))
+
+  return { ...result, allData }
 }
 
 export const useReadPost = (postId: string) => {
@@ -87,10 +91,6 @@ export const useDeletePost = () => {
     onSuccess: async (_, postId) => {
       const user = queryClient.getQueryData<User>(["account", "current"])
 
-      queryClient.setQueryData<Post[]>(["posts", { userId: user?.id }], oldPosts => {
-        return oldPosts?.filter(p => p.id !== postId)
-      })
-
       await queryClient.invalidateQueries({
         queryKey: ["posts", { userId: user?.id }],
       })
@@ -105,10 +105,6 @@ export const useUpdatePost = () => {
     mutationFn: updatePost,
     onSuccess: async (post, { postId }) => {
       const user = queryClient.getQueryData<User>(["account", "current"])
-
-      queryClient.setQueryData<Post[]>(["posts", { userId: user?.id }], oldPosts => {
-        return oldPosts?.map(p => (p.id === postId ? post : p))
-      })
 
       await queryClient.invalidateQueries({
         queryKey: ["posts", { userId: user?.id }],
