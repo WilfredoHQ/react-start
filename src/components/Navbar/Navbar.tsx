@@ -22,7 +22,7 @@ import {
   Toolbar,
 } from "@mui/material"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
 import { useCurrent } from "src/hooks/useAccount"
 import { useAuth } from "src/hooks/useAuth"
 import s from "./Navbar.module.scss"
@@ -48,11 +48,16 @@ const Navbar = () => {
             </IconButton>
           </div>
           <div className={s.navigationButtons}>
-            <Button component={Link} to="/" color="inherit" startIcon={<HomeIcon />}>
+            <Button
+              component={RouterLink}
+              to="/"
+              color="inherit"
+              startIcon={<HomeIcon />}
+            >
               Inicio
             </Button>
             <Button
-              component={Link}
+              component={RouterLink}
               to="/usuarios"
               color="inherit"
               startIcon={<PeopleIcon />}
@@ -75,7 +80,7 @@ const Navbar = () => {
             }}
           >
             <MenuItem
-              component={Link}
+              component={RouterLink}
               to={`/usuarios/${current.data?.id ?? ""}`}
               onClick={() => {
                 setAnchorEl(null)
@@ -88,7 +93,7 @@ const Navbar = () => {
             </MenuItem>
             <Divider />
             <MenuItem
-              component={Link}
+              component={RouterLink}
               to="/configuracion"
               onClick={() => {
                 setAnchorEl(null)
@@ -120,10 +125,9 @@ const Navbar = () => {
       >
         <List className={s.navigationList}>
           <ListItem
-            component={Link}
+            component={RouterLink}
             to="/"
             disablePadding
-            className={s.navigationItem}
             onClick={() => {
               setOpen(false)
             }}
@@ -136,10 +140,9 @@ const Navbar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem
-            component={Link}
+            component={RouterLink}
             to="/usuarios"
             disablePadding
-            className={s.navigationItem}
             onClick={() => {
               setOpen(false)
             }}

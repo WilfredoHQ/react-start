@@ -1,7 +1,7 @@
-import { Button, CircularProgress, TextField } from "@mui/material"
+import { Button, CircularProgress, Link, TextField } from "@mui/material"
 import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
-import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { Link as RouterLink, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useResetPassword } from "src/hooks/useAccount"
 import s from "./ResetPassword.module.scss"
@@ -99,7 +99,10 @@ const ResetPassword = () => {
           </Button>
         </form>
         <p className={s.option}>
-          ¿Tienes inconvenientes? <Link to="/recuperar">Enviar nuevo correo</Link>
+          ¿Tienes inconvenientes?{" "}
+          <Link component={RouterLink} to="/recuperar" underline="hover">
+            Enviar nuevo correo
+          </Link>
         </p>
       </main>
     </div>

@@ -1,7 +1,7 @@
-import { Button, CircularProgress, TextField } from "@mui/material"
+import { Button, CircularProgress, Link, TextField } from "@mui/material"
 import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useLogin } from "src/hooks/useAccount"
 import s from "./Login.module.scss"
@@ -83,10 +83,15 @@ const Login = () => {
           </Button>
         </form>
         <p className={s.option}>
-          ¿No tienes una cuenta? <Link to="/registro">Regístrate gratis</Link>
+          ¿No tienes una cuenta?{" "}
+          <Link component={RouterLink} to="/registro" underline="hover">
+            Regístrate gratis
+          </Link>
         </p>
         <p className={s.option}>
-          <Link to="/recuperar">¿Olvidaste tu contraseña?</Link>
+          <Link component={RouterLink} to="/recuperar" underline="hover">
+            ¿Olvidaste tu contraseña?
+          </Link>
         </p>
       </main>
     </div>

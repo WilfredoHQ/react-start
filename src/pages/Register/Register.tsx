@@ -1,7 +1,7 @@
-import { Button, CircularProgress, TextField } from "@mui/material"
+import { Button, CircularProgress, Link, TextField } from "@mui/material"
 import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useCreateUser } from "src/hooks/useUsers"
 import s from "./Register.module.scss"
@@ -117,7 +117,10 @@ const Register = () => {
           </Button>
         </form>
         <p className={s.option}>
-          ¿Ya tienes cuenta? <Link to="/">Inicia sesión</Link>
+          ¿Ya tienes cuenta?{" "}
+          <Link component={RouterLink} to="/" underline="hover">
+            Inicia sesión
+          </Link>
         </p>
       </main>
     </div>

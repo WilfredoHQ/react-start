@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
 import s from "./NotFound.module.scss"
 
 const NotFound = () => {
@@ -7,7 +7,7 @@ const NotFound = () => {
     <div className={s.notFound}>
       <main className={s.main}>
         <h2>NotFound</h2>
-        <Button component={Link} variant="contained" to="/">
+        <Button component={RouterLink} variant="contained" to="/">
           Regresar al inicio
         </Button>
       </main>

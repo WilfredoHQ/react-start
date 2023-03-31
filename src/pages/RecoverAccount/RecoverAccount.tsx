@@ -1,7 +1,7 @@
-import { Button, CircularProgress, TextField } from "@mui/material"
+import { Button, CircularProgress, Link, TextField } from "@mui/material"
 import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useRecover } from "src/hooks/useAccount"
 import s from "./RecoverAccount.module.scss"
@@ -74,10 +74,16 @@ const RecoverAccount = () => {
           </Button>
         </form>
         <p className={s.option}>
-          ¿No tienes una cuenta? <Link to="/registro">Regístrate gratis</Link>
+          ¿No tienes una cuenta?{" "}
+          <Link component={RouterLink} to="/registro" underline="hover">
+            Regístrate gratis
+          </Link>
         </p>
         <p className={s.option}>
-          ¿Recordaste tu contraseña? <Link to="/">Inicia sesión</Link>
+          ¿Recordaste tu contraseña?{" "}
+          <Link component={RouterLink} to="/" underline="hover">
+            Inicia sesión
+          </Link>
         </p>
       </main>
     </div>
