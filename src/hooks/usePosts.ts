@@ -22,8 +22,9 @@ import {
 export const useReadPosts = ({ skip = 0, limit = 20, ...rest }: V1PostsListParams) => {
   const result = useInfiniteQuery({
     queryKey: ["posts", rest],
-    queryFn: async ({ pageParam = skip }) =>
-      await readPosts({ ...rest, skip: pageParam, limit }),
+    queryFn: async ({ pageParam = skip }) => {
+      return await readPosts({ ...rest, skip: pageParam, limit })
+    },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length < limit) return false
 
@@ -43,7 +44,7 @@ export const useCreatePost = () => {
 
   return useMutation({
     mutationFn: createPost,
-    onSuccess: async post => {
+    onSuccess: async () => {
       const user = queryClient.getQueryData<User>(["account", "current"])
 
       await queryClient.invalidateQueries({
@@ -60,8 +61,9 @@ export const useReadHomePosts = ({
 }: V1PostsHomeListParams) => {
   const result = useInfiniteQuery({
     queryKey: ["posts", "home", rest],
-    queryFn: async ({ pageParam = skip }) =>
-      await readHomePosts({ ...rest, skip: pageParam, limit }),
+    queryFn: async ({ pageParam = skip }) => {
+      return await readHomePosts({ ...rest, skip: pageParam, limit })
+    },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length < limit) return false
 
@@ -79,7 +81,9 @@ export const useReadHomePosts = ({
 export const useReadPost = (postId: string) => {
   return useQuery({
     queryKey: ["posts", postId],
-    queryFn: async () => await readPost(postId),
+    queryFn: async () => {
+      return await readPost(postId)
+    },
   })
 }
 
@@ -88,7 +92,7 @@ export const useDeletePost = () => {
 
   return useMutation({
     mutationFn: deletePost,
-    onSuccess: async (_, postId) => {
+    onSuccess: async () => {
       const user = queryClient.getQueryData<User>(["account", "current"])
 
       await queryClient.invalidateQueries({
@@ -103,7 +107,7 @@ export const useUpdatePost = () => {
 
   return useMutation({
     mutationFn: updatePost,
-    onSuccess: async (post, { postId }) => {
+    onSuccess: async () => {
       const user = queryClient.getQueryData<User>(["account", "current"])
 
       await queryClient.invalidateQueries({

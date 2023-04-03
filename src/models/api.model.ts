@@ -10,30 +10,31 @@
  */
 
 export interface Error {
-  detail?: string
+  detail: string
 }
 
-export interface Follow {
-  createdAt?: string
+export interface FollowerRelation {
+  createdAt: string
   followedId: string
   followerId: string
-  id?: string
-  updatedAt?: string
+  id: string
+  updatedAt: string
 }
 
-export interface FollowCreate {
-  followedID: string
+export interface FollowerRelationCreate {
+  followedId: string
 }
 
 export interface Msg {
-  msg?: string
+  msg: string
 }
 
 export interface Post {
   content: string
-  createdAt?: string
-  id?: string
-  updatedAt?: string
+  createdAt: string
+  id: string
+  updatedAt: string
+  user: PostUser
   userId: string
 }
 
@@ -43,6 +44,11 @@ export interface PostCreate {
 
 export interface PostUpdate {
   content?: string
+}
+
+export interface PostUser {
+  avatarUrl: string
+  fullName: string
 }
 
 export interface Recover {
@@ -56,24 +62,24 @@ export interface ResetPassword {
 }
 
 export interface Token {
-  accessToken?: string
-  tokenType?: string
+  accessToken: string
+  tokenType: string
 }
 
 export interface User {
-  avatarUrl?: string
-  biography?: string
-  birthdate?: string
-  coverUrl?: string
-  createdAt?: string
+  avatarUrl: string
+  biography: string
+  birthdate: string
+  coverUrl: string
+  createdAt: string
   email: string
-  fullName?: string
-  gender?: string
-  id?: string
-  isActive?: boolean
-  isSuperuser?: boolean
-  location?: string
-  updatedAt?: string
+  fullName: string
+  gender: string
+  id: string
+  isActive: boolean
+  isSuperuser: boolean
+  location: string
+  updatedAt: string
 }
 
 export interface UserCreate {
@@ -106,7 +112,7 @@ export interface UserUpdate {
 }
 
 export interface ValidationError {
-  detail?: any
+  detail: any
 }
 
 export interface V1AccountLoginCreatePayload {
@@ -116,25 +122,8 @@ export interface V1AccountLoginCreatePayload {
   password: string
 }
 
-export interface V1FollowsListParams {
-  /** Follower Id */
-  followerId?: string
-  /** Followed Id */
-  followedId?: string
-  /**
-   * Skip
-   * @default 0
-   */
-  skip?: number
-  /**
-   * Limit
-   * @default 20
-   */
-  limit?: number
-}
-
 export interface V1PostsListParams {
-  /** User Id */
+  /** User id */
   userId?: string
   /** Search */
   search?: string
@@ -166,9 +155,9 @@ export interface V1PostsHomeListParams {
 }
 
 export interface V1UsersListParams {
-  /** Follower Id */
+  /** Follower id */
   followerId?: string
-  /** Followed Id */
+  /** Followed id */
   followedId?: string
   /** Search */
   search?: string

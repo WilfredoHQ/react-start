@@ -11,8 +11,9 @@ import { useLogin } from "./useAccount"
 export const useReadUsers = ({ skip = 0, limit = 20, ...rest }: V1UsersListParams) => {
   const result = useInfiniteQuery({
     queryKey: ["users", rest],
-    queryFn: async ({ pageParam = skip }) =>
-      await readUsers({ ...rest, skip: pageParam, limit }),
+    queryFn: async ({ pageParam = skip }) => {
+      return await readUsers({ ...rest, skip: pageParam, limit })
+    },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length < limit) return false
 
@@ -44,7 +45,9 @@ export const useCreateUser = () => {
 export const useReadUser = (userId: string) => {
   return useQuery({
     queryKey: ["users", userId],
-    queryFn: async () => await readUser(userId),
+    queryFn: async () => {
+      return await readUser(userId)
+    },
   })
 }
 
@@ -53,8 +56,7 @@ export const useUpdateUser = () => {
 
   return useMutation({
     mutationFn: updateUser,
-    onSuccess: async user => {
-      queryClient.setQueryData(["account", "current"], user)
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["account", "current"] })
     },
   })

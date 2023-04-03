@@ -1,67 +1,43 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { type FollowerRelation } from "src/models"
 import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query"
-import { type User, type Follow, type V1FollowsListParams } from "src/models"
-import { createFollow, deleteFollow, readFollow, readFollows } from "src/services"
+  createFollowerRelation,
+  deleteFollowerRelation,
+  checkFollowerRelation,
+} from "src/services"
 
-export const useReadFollows = ({
-  skip = 0,
-  limit = 20,
-  ...rest
-}: V1FollowsListParams) => {
-  const result = useInfiniteQuery({
-    queryKey: ["follows", rest],
-    queryFn: async ({ pageParam = skip }) =>
-      await readFollows({ ...rest, skip: pageParam, limit }),
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length < limit) return false
-
-      const follows = ([] as Follow[]).concat(...allPages)
-
-      return follows.length
-    },
-  })
-
-  const allData = ([] as Follow[]).concat(...(result.data?.pages ?? []))
-
-  return { ...result, allData }
-}
-
-export const useCreateFollow = () => {
+export const useCreateFollowerRelation = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: createFollow,
-    onSuccess: async follow => {
-      const user = queryClient.getQueryData<User>(["account", "current"])
-
+    mutationFn: createFollowerRelation,
+    onSuccess: async (_, { followedId }) => {
       await queryClient.invalidateQueries({
-        queryKey: ["follows", { followerId: user?.id }],
+        queryKey: ["follower-relations", "following", followedId],
       })
     },
   })
 }
 
-export const useReadFollow = (followId: string) => {
+export const useCheckFollowerRelation = (userId: string) => {
   return useQuery({
-    queryKey: ["follows", followId],
-    queryFn: async () => await readFollow(followId),
+    queryKey: ["follower-relations", "following", userId],
+    queryFn: async () => {
+      return await checkFollowerRelation(userId)
+    },
   })
 }
 
-export const useDeleteFollow = () => {
+export const useDeleteFollowerRelation = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: deleteFollow,
-    onSuccess: async (_, followId) => {
-      const user = queryClient.getQueryData<User>(["account", "current"])
-
+    mutationFn: async (followerRelation: FollowerRelation) => {
+      return await deleteFollowerRelation(followerRelation.id)
+    },
+    onSuccess: async (_, { followedId }) => {
       await queryClient.invalidateQueries({
-        queryKey: ["follows", { followerId: user?.id }],
+        queryKey: ["follower-relations", "following", followedId],
       })
     },
   })

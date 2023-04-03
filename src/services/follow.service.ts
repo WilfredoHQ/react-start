@@ -1,33 +1,33 @@
 import {
-  type Follow,
-  type FollowCreate,
+  type FollowerRelation,
+  type FollowerRelationCreate,
   type Msg,
-  type V1FollowsListParams,
 } from "src/models"
 import { startClient } from "./client"
 
-export const readFollows = async (v1FollowsListParams: V1FollowsListParams) => {
-  const { data } = await startClient.get<Follow[]>("/follows", {
-    params: v1FollowsListParams,
-  })
+export const createFollowerRelation = async (
+  followRelationCreate: FollowerRelationCreate
+) => {
+  const { data } = await startClient.post<FollowerRelation>(
+    "/follower-relations",
+    followRelationCreate
+  )
 
   return data
 }
 
-export const createFollow = async (followCreate: FollowCreate) => {
-  const { data } = await startClient.post<Follow>("/follows", followCreate)
+export const checkFollowerRelation = async (userId: string) => {
+  const { data } = await startClient.get<FollowerRelation>(
+    `/follower-relations/following/${userId}`
+  )
 
   return data
 }
 
-export const readFollow = async (followId: string) => {
-  const { data } = await startClient.get<Follow>(`/follows/${followId}`)
-
-  return data
-}
-
-export const deleteFollow = async (followId: string) => {
-  const { data } = await startClient.delete<Msg>(`/follows/${followId}`)
+export const deleteFollowerRelation = async (followerRelationId: string) => {
+  const { data } = await startClient.delete<Msg>(
+    `/follower-relations/${followerRelationId}`
+  )
 
   return data
 }
