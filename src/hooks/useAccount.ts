@@ -12,7 +12,7 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: login,
     onSuccess: token => {
-      token.accessToken !== undefined && handleLogin(token.accessToken)
+      handleLogin(token.accessToken)
     },
   })
 }

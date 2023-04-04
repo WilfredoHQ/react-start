@@ -70,11 +70,13 @@ const Navbar = () => {
               setAnchorEl(event.currentTarget)
             }}
           >
-            <Avatar src="" />
+            <Avatar src={current.data?.avatarUrl} />
           </IconButton>
           <Menu
-            anchorEl={anchorEl}
             open={Boolean(anchorEl)}
+            anchorEl={anchorEl}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             onClose={() => {
               setAnchorEl(null)
             }}

@@ -17,6 +17,7 @@ export interface FollowerRelation {
   createdAt: string
   followedId: string
   followerId: string
+  hasData: boolean
   id: string
   updatedAt: string
 }
@@ -73,6 +74,8 @@ export interface User {
   coverUrl: string
   createdAt: string
   email: string
+  followersCount: number
+  followingCount: number
   fullName: string
   gender: string
   id: string
@@ -88,7 +91,8 @@ export interface UserCreate {
   birthdate?: string
   coverUrl?: string
   email: string
-  fullName?: string
+  /** @minLength 4 */
+  fullName: string
   gender?: string
   isActive?: boolean
   isSuperuser?: boolean
@@ -102,6 +106,7 @@ export interface UserUpdate {
   biography?: string
   birthdate?: string
   coverUrl?: string
+  /** @minLength 4 */
   fullName?: string
   gender?: string
   isActive?: boolean
