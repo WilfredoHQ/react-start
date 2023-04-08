@@ -10,7 +10,21 @@
  */
 
 export interface Error {
-  detail: string
+  detail:
+    | "internal_server_error"
+    | "endpoint_not_found"
+    | "invalid_credentials"
+    | "invalid_jwt"
+    | "insufficient_privileges"
+    | "current_user_not_found"
+    | "current_user_inactive"
+    | "current_user_not_superuser"
+    | "user_already_registered"
+    | "user_not_found"
+    | "user_inactive"
+    | "follower_relation_already_registered"
+    | "follower_relation_not_found"
+    | "post_not_found"
 }
 
 export interface FollowerRelation {
@@ -27,7 +41,7 @@ export interface FollowerRelationCreate {
 }
 
 export interface Msg {
-  msg: string
+  msg: "email_sent" | "password_updated" | "post_deleted" | "follower_relation_deleted"
 }
 
 export interface Post {

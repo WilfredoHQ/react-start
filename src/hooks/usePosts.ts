@@ -4,6 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query"
+import { toast } from "react-toastify"
 import {
   type User,
   type Post,
@@ -18,6 +19,7 @@ import {
   readPosts,
   updatePost,
 } from "src/services"
+import { getErrorDetail } from "src/utilities/get-error-detail.utility"
 
 export const useReadPosts = ({ skip = 0, limit = 20, ...rest }: V1PostsListParams) => {
   const result = useInfiniteQuery({
@@ -99,6 +101,13 @@ export const useDeletePost = () => {
         queryKey: ["posts", { userId: user?.id }],
       })
     },
+    onError: error => {
+      switch (getErrorDetail(error)) {
+        case "post_not_found":
+          toast.error("La publicación no ha sido encontrada.")
+          break
+      }
+    },
   })
 }
 
@@ -113,6 +122,13 @@ export const useUpdatePost = () => {
       await queryClient.invalidateQueries({
         queryKey: ["posts", { userId: user?.id }],
       })
+    },
+    onError: error => {
+      switch (getErrorDetail(error)) {
+        case "post_not_found":
+          toast.error("La publicación no ha sido encontrada.")
+          break
+      }
     },
   })
 }

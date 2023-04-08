@@ -1,8 +1,6 @@
 import { Button, CircularProgress, Link, TextField } from "@mui/material"
-import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link as RouterLink } from "react-router-dom"
-import { toast } from "react-toastify"
 import { useLogin } from "src/hooks/useAccount"
 import s from "./Login.module.scss"
 
@@ -21,24 +19,7 @@ const Login = () => {
   } = useForm<FormData>()
 
   const onSubmit = handleSubmit(data => {
-    login.mutate(data, {
-      onError: error => {
-        let content = "Ha ocurrido un error"
-
-        if (error instanceof AxiosError) {
-          switch (error.response?.status) {
-            case 400:
-              content = "Correo o contraseña incorrectos"
-              break
-            default:
-              console.debug(error.response?.data)
-              break
-          }
-        }
-
-        toast.error(content)
-      },
-    })
+    login.mutate(data)
   })
 
   return (
@@ -72,8 +53,8 @@ const Login = () => {
           />
           <Button
             type="submit"
-            disabled={login.status === "loading"}
             variant="contained"
+            disabled={login.status === "loading"}
             className={s.submit}
           >
             Iniciar sesión

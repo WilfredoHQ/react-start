@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { toast } from "react-toastify"
 import { type FollowerRelation } from "src/models"
 import {
   createFollowerRelation,
   deleteFollowerRelation,
   checkFollowerRelation,
 } from "src/services"
+import { getErrorDetail } from "src/utilities/get-error-detail.utility"
 
 export const useCreateFollowerRelation = () => {
   const queryClient = useQueryClient()
@@ -15,6 +17,13 @@ export const useCreateFollowerRelation = () => {
       await queryClient.invalidateQueries({
         queryKey: ["follower-relations", "following", followedId],
       })
+    },
+    onError: error => {
+      switch (getErrorDetail(error)) {
+        case "follower_relation_already_registered":
+          toast.error("Ya hay una relación de seguimiento registrada con este usuario.")
+          break
+      }
     },
   })
 }
@@ -39,6 +48,13 @@ export const useDeleteFollowerRelation = () => {
       await queryClient.invalidateQueries({
         queryKey: ["follower-relations", "following", followedId],
       })
+    },
+    onError: error => {
+      switch (getErrorDetail(error)) {
+        case "follower_relation_not_found":
+          toast.error("La relación de seguidor para el usuario no ha sido encontrada.")
+          break
+      }
     },
   })
 }

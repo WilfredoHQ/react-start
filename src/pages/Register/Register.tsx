@@ -1,10 +1,9 @@
 import { Button, CircularProgress, Link, TextField } from "@mui/material"
-import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link as RouterLink } from "react-router-dom"
-import { toast } from "react-toastify"
 import { useCreateUser } from "src/hooks/useUsers"
 import s from "./Register.module.scss"
+import { getErrorDetail } from "src/utilities/get-error-detail.utility"
 
 interface FormData {
   fullName: string
@@ -28,18 +27,11 @@ const Register = () => {
 
     createUser.mutate(rest, {
       onError: error => {
-        let content = "Ha ocurrido un error"
-
-        if (error instanceof AxiosError) {
-          switch (error.response?.status) {
-            case 409:
-              content = "El usuario con este correo ya existe en el sistema"
-              setFocus("email")
-              break
-          }
+        switch (getErrorDetail(error)) {
+          case "user_already_registered":
+            setFocus("email")
+            break
         }
-
-        toast.error(content)
       },
     })
   })
@@ -106,14 +98,12 @@ const Register = () => {
           />
           <Button
             type="submit"
-            disabled={createUser.status === "loading"}
             variant="contained"
+            disabled={createUser.isLoading}
             className={s.submit}
           >
             Crear cuenta
-            {createUser.status === "loading" && (
-              <CircularProgress size={16} color="inherit" />
-            )}
+            {createUser.isLoading && <CircularProgress size={16} color="inherit" />}
           </Button>
         </form>
         <p className={s.option}>

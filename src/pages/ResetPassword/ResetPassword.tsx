@@ -1,8 +1,6 @@
 import { Button, CircularProgress, Link, TextField } from "@mui/material"
-import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link as RouterLink, useNavigate, useSearchParams } from "react-router-dom"
-import { toast } from "react-toastify"
 import { useResetPassword } from "src/hooks/useAccount"
 import s from "./ResetPassword.module.scss"
 
@@ -30,21 +28,12 @@ const ResetPassword = () => {
       resetPassword.mutate(
         { token, newPassword: password },
         {
-          onSuccess: () => {
-            navigate("/", { replace: true })
-          },
-          onError: error => {
-            let content = "Ha ocurrido un error"
-
-            if (error instanceof AxiosError) {
-              switch (error.response?.status) {
-                case 401:
-                  content = "El link ya no es válido"
-                  break
-              }
+          onSuccess: ({ msg }) => {
+            switch (msg) {
+              case "password_updated":
+                navigate("/", { replace: true })
+                break
             }
-
-            toast.error(content)
           },
         }
       )
@@ -88,14 +77,12 @@ const ResetPassword = () => {
           />
           <Button
             type="submit"
-            disabled={resetPassword.status === "loading"}
             variant="contained"
+            disabled={resetPassword.isLoading}
             className={s.submit}
           >
             Restablecer contraseña
-            {resetPassword.status === "loading" && (
-              <CircularProgress size={16} color="inherit" />
-            )}
+            {resetPassword.isLoading && <CircularProgress size={16} color="inherit" />}
           </Button>
         </form>
         <p className={s.option}>

@@ -7,6 +7,8 @@ import {
 import { type User, type V1UsersListParams } from "src/models"
 import { createUser, readUser, readUsers, updateUser } from "src/services"
 import { useLogin } from "./useAccount"
+import { getErrorDetail } from "src/utilities/get-error-detail.utility"
+import { toast } from "react-toastify"
 
 export const useReadUsers = ({ skip = 0, limit = 20, ...rest }: V1UsersListParams) => {
   const result = useInfiniteQuery({
@@ -39,6 +41,15 @@ export const useCreateUser = () => {
         password: userCreate.password,
       })
     },
+    onError: error => {
+      switch (getErrorDetail(error)) {
+        case "user_already_registered":
+          toast.error(
+            "Ya existe una cuenta asociada con esta dirección de correo electrónico."
+          )
+          break
+      }
+    },
   })
 }
 
@@ -58,6 +69,13 @@ export const useUpdateUser = () => {
     mutationFn: updateUser,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["account", "current"] })
+    },
+    onError: error => {
+      switch (getErrorDetail(error)) {
+        case "user_not_found":
+          toast.error("El usuario no ha sido encontrado.")
+          break
+      }
     },
   })
 }

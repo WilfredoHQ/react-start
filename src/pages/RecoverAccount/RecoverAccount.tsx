@@ -1,8 +1,6 @@
 import { Button, CircularProgress, Link, TextField } from "@mui/material"
-import { AxiosError } from "axios"
 import { useForm } from "react-hook-form"
 import { Link as RouterLink } from "react-router-dom"
-import { toast } from "react-toastify"
 import { useRecover } from "src/hooks/useAccount"
 import s from "./RecoverAccount.module.scss"
 
@@ -20,24 +18,7 @@ const RecoverAccount = () => {
   } = useForm<FormData>()
 
   const onSubmit = handleSubmit(data => {
-    recover.mutate(data, {
-      onSuccess: () => {
-        toast.success("Correo electrónico de recuperación de cuenta enviado")
-      },
-      onError: error => {
-        let content = "Ha ocurrido un error"
-
-        if (error instanceof AxiosError) {
-          switch (error.response?.status) {
-            case 404:
-              content = "El correo no existe"
-              break
-          }
-        }
-
-        toast.error(content)
-      },
-    })
+    recover.mutate(data)
   })
 
   return (
@@ -63,14 +44,12 @@ const RecoverAccount = () => {
           />
           <Button
             type="submit"
-            disabled={recover.status === "loading"}
             variant="contained"
+            disabled={recover.isLoading}
             className={s.submit}
           >
             Recuperar cuenta
-            {recover.status === "loading" && (
-              <CircularProgress size={16} color="inherit" />
-            )}
+            {recover.isLoading && <CircularProgress size={16} color="inherit" />}
           </Button>
         </form>
         <p className={s.option}>
