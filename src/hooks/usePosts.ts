@@ -14,18 +14,18 @@ import {
 import {
   createPost,
   deletePost,
-  readHomePosts,
-  readPost,
-  readPosts,
+  getHomePosts,
+  getPost,
+  getPosts,
   updatePost,
 } from "src/services"
 import { getErrorDetail } from "src/utilities/get-error-detail.utility"
 
-export const useReadPosts = ({ skip = 0, limit = 20, ...rest }: V1PostsListParams) => {
+export const useGetPosts = ({ skip = 0, limit = 20, ...rest }: V1PostsListParams) => {
   const result = useInfiniteQuery({
     queryKey: ["posts", rest],
     queryFn: async ({ pageParam = skip }) => {
-      return await readPosts({ ...rest, skip: pageParam, limit })
+      return await getPosts({ ...rest, skip: pageParam, limit })
     },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length < limit) return false
@@ -56,7 +56,7 @@ export const useCreatePost = () => {
   })
 }
 
-export const useReadHomePosts = ({
+export const useGetHomePosts = ({
   skip = 0,
   limit = 20,
   ...rest
@@ -64,7 +64,7 @@ export const useReadHomePosts = ({
   const result = useInfiniteQuery({
     queryKey: ["posts", "home", rest],
     queryFn: async ({ pageParam = skip }) => {
-      return await readHomePosts({ ...rest, skip: pageParam, limit })
+      return await getHomePosts({ ...rest, skip: pageParam, limit })
     },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length < limit) return false
@@ -80,11 +80,11 @@ export const useReadHomePosts = ({
   return { ...result, allData }
 }
 
-export const useReadPost = (postId: string) => {
+export const useGetPost = (postId: string) => {
   return useQuery({
     queryKey: ["posts", postId],
     queryFn: async () => {
-      return await readPost(postId)
+      return await getPost(postId)
     },
   })
 }

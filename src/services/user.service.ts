@@ -6,7 +6,7 @@ import {
 } from "src/models"
 import { startClient } from "./client"
 
-export const readUsers = async (v1UsersListParams: V1UsersListParams) => {
+export const getUsers = async (v1UsersListParams: V1UsersListParams) => {
   const { data } = await startClient.get<User[]>("/users", {
     params: v1UsersListParams,
   })
@@ -20,7 +20,7 @@ export const createUser = async (userCreate: UserCreate) => {
   return data
 }
 
-export const readUser = async (userId: string) => {
+export const getUser = async (userId: string) => {
   const { data } = await startClient.get<User>(`/users/${userId}`)
 
   return data

@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { current, login, recover, resetPassword } from "src/services"
+import { getCurrentAccount, login, recoverAccount, resetPassword } from "src/services"
 import { useAuth } from "./useAuth"
 import { toast } from "react-toastify"
 import { getErrorDetail } from "src/utilities/get-error-detail.utility"
 
-export const useCurrent = () => {
-  return useQuery({ queryKey: ["account", "current"], queryFn: current })
+export const useGetCurrentAccount = () => {
+  return useQuery({ queryKey: ["account", "current"], queryFn: getCurrentAccount })
 }
 
 export const useLogin = () => {
@@ -29,9 +29,9 @@ export const useLogin = () => {
   })
 }
 
-export const useRecover = () => {
+export const useRecoverAccount = () => {
   return useMutation({
-    mutationFn: recover,
+    mutationFn: recoverAccount,
     onSuccess: ({ msg }) => {
       switch (msg) {
         case "email_sent":

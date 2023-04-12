@@ -23,14 +23,14 @@ import {
 } from "@mui/material"
 import { useState } from "react"
 import { Link as RouterLink } from "react-router-dom"
-import { useCurrent } from "src/hooks/useAccount"
+import { useGetCurrentAccount } from "src/hooks/useAccount"
 import { useAuth } from "src/hooks/useAuth"
 import s from "./Navbar.module.scss"
 
 const Navbar = () => {
   const [open, setOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-  const current = useCurrent()
+  const current = useGetCurrentAccount()
   const { handleLogout } = useAuth()
 
   return (

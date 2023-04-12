@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Link, TextField } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { Link as RouterLink } from "react-router-dom"
-import { useRecover } from "src/hooks/useAccount"
+import { useRecoverAccount } from "src/hooks/useAccount"
 import s from "./RecoverAccount.module.scss"
 
 interface FormData {
@@ -9,7 +9,7 @@ interface FormData {
 }
 
 const RecoverAccount = () => {
-  const recover = useRecover()
+  const recover = useRecoverAccount()
 
   const {
     register,

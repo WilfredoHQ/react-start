@@ -66,7 +66,7 @@ export interface PostUser {
   fullName: string
 }
 
-export interface Recover {
+export interface RecoverAccount {
   email: string
 }
 
@@ -135,10 +135,8 @@ export interface ValidationError {
 }
 
 export interface V1AccountLoginCreatePayload {
-  /** Username */
-  username: string
-  /** Password */
   password: string
+  username: string
 }
 
 export interface V1PostsListParams {
@@ -153,6 +151,7 @@ export interface V1PostsListParams {
   skip?: number
   /**
    * Limit
+   * @min 1
    * @default 20
    */
   limit?: number
@@ -168,6 +167,7 @@ export interface V1PostsHomeListParams {
   skip?: number
   /**
    * Limit
+   * @min 1
    * @default 20
    */
   limit?: number
@@ -187,6 +187,7 @@ export interface V1UsersListParams {
   skip?: number
   /**
    * Limit
+   * @min 1
    * @default 20
    */
   limit?: number

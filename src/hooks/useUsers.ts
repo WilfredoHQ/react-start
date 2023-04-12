@@ -5,16 +5,16 @@ import {
   useQueryClient,
 } from "@tanstack/react-query"
 import { type User, type V1UsersListParams } from "src/models"
-import { createUser, readUser, readUsers, updateUser } from "src/services"
+import { createUser, getUser, getUsers, updateUser } from "src/services"
 import { useLogin } from "./useAccount"
 import { getErrorDetail } from "src/utilities/get-error-detail.utility"
 import { toast } from "react-toastify"
 
-export const useReadUsers = ({ skip = 0, limit = 20, ...rest }: V1UsersListParams) => {
+export const useGetUsers = ({ skip = 0, limit = 20, ...rest }: V1UsersListParams) => {
   const result = useInfiniteQuery({
     queryKey: ["users", rest],
     queryFn: async ({ pageParam = skip }) => {
-      return await readUsers({ ...rest, skip: pageParam, limit })
+      return await getUsers({ ...rest, skip: pageParam, limit })
     },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.length < limit) return false
@@ -53,11 +53,11 @@ export const useCreateUser = () => {
   })
 }
 
-export const useReadUser = (userId: string) => {
+export const useGetUser = (userId: string) => {
   return useQuery({
     queryKey: ["users", userId],
     queryFn: async () => {
-      return await readUser(userId)
+      return await getUser(userId)
     },
   })
 }

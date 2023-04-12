@@ -1,11 +1,11 @@
 import { Button } from "@mui/material"
 import { useAuth } from "src/hooks/useAuth"
-import { useCurrent } from "src/hooks/useAccount"
+import { useGetCurrentAccount } from "src/hooks/useAccount"
 import s from "./Home.module.scss"
 
 const Home = () => {
   const { handleLogout } = useAuth()
-  const current = useCurrent()
+  const current = useGetCurrentAccount()
 
   return (
     <div className={s.home}>

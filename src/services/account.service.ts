@@ -1,6 +1,6 @@
 import {
   type Msg,
-  type Recover,
+  type RecoverAccount,
   type ResetPassword,
   type Token,
   type User,
@@ -8,7 +8,7 @@ import {
 } from "src/models"
 import { startClient } from "./client"
 
-export const current = async () => {
+export const getCurrentAccount = async () => {
   const { data } = await startClient.get<User>("/account/current")
 
   return data
@@ -30,7 +30,7 @@ export const login = async (
   return data
 }
 
-export const recover = async (recover: Recover) => {
+export const recoverAccount = async (recover: RecoverAccount) => {
   const { data } = await startClient.post<Msg>("/account/recover", recover)
 
   return data

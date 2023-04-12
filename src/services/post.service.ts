@@ -8,7 +8,7 @@ import {
 } from "src/models"
 import { startClient } from "./client"
 
-export const readPosts = async (v1PostsListParams: V1PostsListParams) => {
+export const getPosts = async (v1PostsListParams: V1PostsListParams) => {
   const { data } = await startClient.get<Post[]>("/posts", {
     params: v1PostsListParams,
   })
@@ -22,7 +22,7 @@ export const createPost = async (postCreate: PostCreate) => {
   return data
 }
 
-export const readHomePosts = async (v1PostsHomeListParams: V1PostsHomeListParams) => {
+export const getHomePosts = async (v1PostsHomeListParams: V1PostsHomeListParams) => {
   const { data } = await startClient.get<Post[]>("/posts/home", {
     params: v1PostsHomeListParams,
   })
@@ -30,7 +30,7 @@ export const readHomePosts = async (v1PostsHomeListParams: V1PostsHomeListParams
   return data
 }
 
-export const readPost = async (postId: string) => {
+export const getPost = async (postId: string) => {
   const { data } = await startClient.get<Post>(`/posts/${postId}`)
 
   return data
